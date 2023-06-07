@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: hamednsquota
+  namespace: hamedns
+spec:
+  hard:
+    cpu: "10000m"
+    memory: "10000M"
+    pods: "100"
+    count/deployments.apps: "3"

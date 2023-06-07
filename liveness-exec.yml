@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: livenessexec
+  namespace: hamedns
+  labels:
+    name: livenessexec
+spec:
+  containers:
+  - name: livenessexec
+    image: repo.ficld.ir/library/busybox:1.32.0
+    command:
+      - "sh"
+      - "-c"
+      - |
+        touch /tmp/healthfile
+        sleep 30
+        rm /tmp/healthfile
+        sleep 30
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
+    livenessProbe:
+      exec:
+        command:
+          - cat
+          - /tmp/healthfile
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      failureThreshold: 1

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc1nodeport
+  namespace: hamedns
+spec:
+  selector:
+    app: mynginxapp
+    type: frontend
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 80
+    nodePort: 31002

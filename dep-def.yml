@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: firstdeplyment
+  labels:
+    app: mynginx
+    label: hamed
+spec:
+  template:
+    metadata:
+      name: ngxinpods
+      labels:
+        app: myapp
+        type: nginxapp
+    spec:
+      containers:
+        - name: nginx
+          image: repo.ficld.ir/library/nginx:latest
+  replicas: 5
+  selector:
+    matchLabels:
+      app: myapp
+    

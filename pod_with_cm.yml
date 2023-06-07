@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myalpineapp
+  labels:
+    name: alpineapp
+spec:
+  volumes:
+    - name: myvolcm
+      configMap:
+        name: myconfigs3
+  containers:
+  - name: alpine
+    image: repo.ficld.ir/library/alpine:3.11.3
+    command:
+      - "sleep"
+      - "infinity"
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "500m"
+      limits:
+        memory: "512Mi"
+        cpu: "1"
+    ports:
+      - containerPort: 8080
+    envFrom:
+      - configMapRef:
+          name: myconfigs
+    env:
+      - name: color 
+        value: bule
+      - name: mythem  #env key 
+        valueFrom:
+          configMapKeyRef:
+            key: them # return value with this key as environment variabel value
+            name: myconfigs2 #configmap name
+    volumeMounts:
+      - name: myvolcm
+        mountPath: /mnt

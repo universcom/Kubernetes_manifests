@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mythirdapp
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: mythirdapp
+      labels:
+        app: mythirdapp
+    spec:
+      containers:
+        - name: mythirdapp
+          image: repo.ficld.ir/library/nginx:latest
+          ports:
+            - containerPort: 8090
+              hostPort: 8099
+  selector:
+    matchLabels:
+      app: mythirdapp

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myfirstapp
+  namespace: default
+  labels:
+    name: myapp
+    type: "front-end"
+spec:
+  containers:
+  - name: mynginx
+    image: repo.ficld.ir/library/nginx:latest

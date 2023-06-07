@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: testdaemonset
+  namespace: hamedns
+  annotations:
+    creator: Hamed Enayatzare
+    mail: hamed.enayatzare@gmail.com
+spec:
+  selector:
+    matchLabels:
+      app: hameddeaemon
+  template:
+    metadata:
+      name: myappdeaemonset
+      labels:
+        app: hameddeaemon
+    spec:
+      containers:
+        - name: nginxdaemon
+          image: repo.ficld.ir/library/nginx:latest
+          resources:
+            requests:
+              cpu: 500m
+              memory: 10M
+            limits:
+              cpu: "1"
+              memory: 100M
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"

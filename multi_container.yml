@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multicontainer
+  namespace: hamedns
+  labels:
+    name: multicontainer
+spec:
+  volumes:
+    - name: config 
+      configMap:
+        name: myconfigs
+  containers:
+  - name: nginx
+    image: repo.ficld.ir/library/nginx:1.21.1
+    ports:
+      - containerPort: 8080
+    resources:
+      requests:
+        memory: 10Mi
+        cpu: 500m
+      limits:
+        memory: 100Mi
+        cpu: "1"
+    volumeMounts:
+      - name: config
+        mountPath: /mnt/myconf
+  - name: debbugger
+    image: repo.ficld.ir/library/alpine:3.11.3
+    command:
+      - "sleep"
+      - "infinity"
+    ports:
+      - containerPort: 9090
+    resources:
+      requests:
+        memory: 10Mi
+        cpu: 500m
+      limits:
+        memory: 100Mi
+        cpu: "1"
+    volumeMounts:
+      - name: config
+        mountPath: /mnt/config

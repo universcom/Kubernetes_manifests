@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: newfrontendDeployment
+spec:
+  strategy: 
+    type: Recreate
+  template:
+    metadata:
+      name: frontend
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: frontend
+          image: kodekloud/webapp-color:v2
+          resources:
+            limits:
+              memory: "500M"
+              cpu: "200m"
+            requests:
+              memory: "10M"
+              cpu: "10m"
+  replicas: 4
+  selector:
+    matchLabels:
+      app: myapp

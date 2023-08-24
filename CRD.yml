@@ -1,0 +1,51 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: hamedenayat.io
+  annotations:
+    "api-approved.kubernetes.io": "unapproved, experimental-only; please get an approval from Kubernetes API reviewers if you're trying to develop a CRD in the *.k8s.io or *.kubernetes.io groups"
+spec:
+  group: hamedenayat.io
+  names:
+    kind: SmartDev
+    plural: smarts ## kubectl get smarts (like kubectl get pods)   
+    singular: smart ## kubectl get smart (like kubectl get pod)
+    shortNames:
+      - smt
+  scope: Namespaced
+  versions:
+    - name: v1sigma1
+      served: true
+      storage: true
+      schema:
+        # schema used for validation
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                emailToHamed:
+                  type: string
+                messageToHamed:
+                  type: string
+                replicas:
+                  type: integer
+                  minimum: 1
+                  maximum: 3
+            status:
+              type: object
+              properties:
+                availableReplicas:
+                  type: integer
+
+
+---
+apiVersion: hamedenayat.io/v1sigma1
+kind: SmartDev
+metadata:
+  name: smart-dev-hamed
+spec:
+  emailToGreet: hamed.enayatzare@gmail.com
+  messageToGreet: Hello
+  replicas: 2
